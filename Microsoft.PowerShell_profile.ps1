@@ -37,8 +37,6 @@ if ([bool]([System.Security.Principal.WindowsIdentity]::GetCurrent()).IsSystem) 
     [System.Environment]::SetEnvironmentVariable('POWERSHELL_TELEMETRY_OPTOUT', 'true', [System.EnvironmentVariableTarget]::Machine)
 }
 
-# Initial GitHub.com connectivity check with 1 second timeout
-$global:canConnectToGitHub = Test-Connection github.com -Count 1 -Quiet -TimeoutSeconds 1
 
 # Import Modules and External Profiles
 # Ensure Terminal-Icons module is installed before importing
@@ -72,13 +70,6 @@ function Update-Profile {
     }
 }
 
-# skip in debug mode
-if (-not $debug) {
-    Update-Profile
-} else {
-    Write-Warning "Skipping profile update check in debug mode"
-}
-
 function Update-PowerShell {
     try {
         Write-Host "Checking for PowerShell updates..." -ForegroundColor Cyan
@@ -103,11 +94,22 @@ function Update-PowerShell {
     }
 }
 
-# skip in debug mode
-if (-not $debug) {
-    Update-PowerShell
-} else {
-    Write-Warning "Skipping PowerShell update in debug mode"
+if($autoUpdate){
+    # Initial GitHub.com connectivity check with 1 second timeout
+    $global:canConnectToGitHub = Test-Connection github.com -Count 1 -Quiet -TimeoutSeconds 1
+    
+    # skip in debug mode
+    if (-not $debug) {
+        Update-Profile
+    } else {
+        Write-Warning "Skipping profile update check in debug mode"
+    }    
+    
+    if (-not $debug) {
+        Update-PowerShell
+    } else {
+        Write-Warning "Skipping PowerShell update in debug mode"
+    }    
 }
 
 function Clear-Cache {
