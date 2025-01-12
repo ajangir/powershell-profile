@@ -2,6 +2,7 @@
 ### Version 1.03 - Refactored
 
 $debug = $false
+$autoUpdate = $false
 
 if ($debug) {
     Write-Host "#######################################" -ForegroundColor Red
@@ -15,7 +16,6 @@ if ($debug) {
     Write-Host "#               version               #" -ForegroundColor Red
     Write-Host "#######################################" -ForegroundColor Red
 }
-
 
 #################################################################################################################################
 ############                                                                                                         ############
