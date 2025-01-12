@@ -2,7 +2,7 @@
 ### Version 1.03 - Refactored
 
 $debug = $false
-$autoUpdate = $false
+$autoUpdate = $true
 
 if ($debug) {
     Write-Host "#######################################" -ForegroundColor Red
